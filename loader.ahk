@@ -1,6 +1,6 @@
 ; MIT License
 ;
-; Copyright (c) 2021 FET Loader
+; Copyright (c) 2022 FET Loader
 ;
 ; Permission is hereby granted, free of charge, to any person obtaining a copy
 ; of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,12 @@
 ;@Ahk2Exe-SetDescription        A simple cheats loader written in AHK.
 ;@Ahk2Exe-SetCopyright          Copyright (C) 2021 FET Loader
 ;@Ahk2Exe-SetCompanyName        FET Loader
-;@Ahk2Exe-SetProductVersion     4.0.0.0
-;@Ahk2Exe-SetVersion            4.0.0.0
+;@Ahk2Exe-SetProductVersion     3.7.1
+;@Ahk2Exe-SetVersion            3.7.1
 ;@Ahk2Exe-SetMainIcon           icon.ico
 ;@Ahk2Exe-UpdateManifest        1
 global script = "FET Loader"
-global version = "v4.0-a1"
+global version = "v3.7.1"
 global build_status = "release"
 global pastebin_key = "YOUR_PASTEBIN_API_KEY"
 global times = 3
@@ -78,19 +78,11 @@ IniRead, password, %A_AppData%\FET Loader\config.ini, credentials, password, %A_
 if (isGithubAvailable() != "1")
 {
     MsgBox, 16, %script%, %string_github_is_not_available%
-    ExitApp    
+    ExitApp   
 }
 
-if (isFetAvailable() != "1")
-{
-    MsgBox, 16, %script%, FETLOADER NE RABOTAET NOW
-    ExitApp    
-}
-
-
-
-Logging(1,"Creating folders and downloading files...")
-IfNotExist, %A_AppData%\FET Loader\cheats.ini
+Logging(1,"Creating folders and downloading files.)
+ifNotExist, %A_AppData%\FET Loader\cheats.ini
 {	
     Logging(1,"- Getting cheat list...")
     UrlDownloadToFile, https://raw.githubusercontent.com/%repo%/%repobranch%/cheats.ini, %A_AppData%\FET Loader\cheats.ini
@@ -106,13 +98,13 @@ IfNotExist, %A_AppData%\FET Loader\vac-bypass.exe
 IfNotExist, %A_AppData%\FET Loader\emb.exe
 {
     Logging(1,"- Downloading emb.exe...")
-    UrlDownloadToFile, https://raw.githubusercontent.com/fetloader/dll-repo/main/emb.exe, %A_AppData%\FET Loader\emb.exe
+    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/emb.exe, %A_AppData%\FET Loader\emb.exe
     Logging(1,"......done.")
 }
 IfNotExist, %A_AppData%\FET Loader\rpconfig.ini
 {	
     Logging(1,"- Getting rpconfig...")
-    UrlDownloadToFile, https://raw.githubusercontent.com/fetloader/dll-repo/main/rpconfig.ini, %A_AppData%\FET Loader\rpconfig.ini
+    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/rpconfig.ini, %A_AppData%\FET Loader\rpconfig.ini
     Logging(1,"......done.")
 }
 Logging(1,"done.")
@@ -248,16 +240,6 @@ if (checkupdates = "true" and build_status = "release")
 {
     Logging(1,"Checking updates...")
     OTA.checkupd()
-}
-
-if (!login)
-{
-    Goto, Login
-}
-else
-{
-    Goto, Auth
-}
 
 GuiClose:
     run taskkill.exe /f /im easyrp.exe,, Hide
@@ -269,74 +251,7 @@ NeutronClose:
     run taskkill.exe /f /im easyrp.exe,, Hide
     ExitApp
     return
-
-Load:
-    Gui, Submit, NoHide
-    ;Inject(0,Cheat)
-    FileRead, jsonStr, cheats.json    
-    parsed := JSON.Load(jsonStr)
-    for i, obj in parsed
-    {
-        if (obj.title = Cheat)
-        {
-            link := obj.link
-            msgbox, Link for cheat: %Cheat% - %link%
-        }
-    }
-    return
-
-Anon:
-{
-    Gui, Submit, NoHide
-    if (Anon = 1)
-    {
-        GuiControl, Disable, Login
-        GuiControl, Disable, Password
-        GuiControl,, Login,
-        GuiControl,, Password,
-    }
-    else
-    {
-        GuiControl, Enable, Login
-        GuiControl, Enable, Password
-    }
-}
-return
-
-
-Auth:
-{
-    Gui, Submit, NoHide
-    if (Anon = 1)
-    {
-        global login := "anonymous"
-        global password := "anonymous"
-    }
-    else
-    {
-        global login := Login
-        global password := Password
-    }
-    Logging(1,"Authorization with username: " login)
-    Gui, Login:Destroy
-    Msgbox, Login: %login%`nPassword: %password%
-    UrlDownloadToFile, http://127.0.0.1:5000/api?login=%login%&password=%password%, %A_AppData%\FET Loader\cheats.json
-    FileRead, jsonStr, cheats.json    
-    global parsed := JSON.Load(jsonStr)
-    if (parsed.error = 401)
-    {
-        Msgbox, 16, %script%, Invalid username or password
-        Logging(2,"Invalid username or password")
-        Goto, Login
-    }
-    Logging(1,"Authorized user: " login)
-    Gosub, ShowGui
-    IniWrite, %login%, %A_AppData%\FET Loader\config.ini, credentials, login
-    IniWrite, %password%, %A_AppData%\FET Loader\config.ini, credentials, password
-	Logging(1,"done.")
-}
-return
-
+ 
 ShowGui:
 {
     if (oldgui = "true")
@@ -373,17 +288,7 @@ ShowGui:
 }
 return
 
-Login:
-Gui, Login:New
-Gui, Login:Add, Edit, x137 y19 w140 h20 vLogin, 
-Gui, Login:Add, Edit, x137 y59 w140 h20 vPassword, 
-Gui, Login:Add, Button, x137 y129 w140 h30 gAuth, Authorize
-Gui, Login:Add, Text, x62 y19 w40 h20 , Login
-Gui, Login:Add, Text, x62 y59 w50 h20 , Password
-Gui, Login:Add, CheckBox, x137 y89 w140 h20 +Center vAnon gAnon, Login as anonymous
-Gui, Login:Show, w418 h185, LOGIN GUI
-return
 
-LoginGuiClose:
+
 ExitApp
 return
