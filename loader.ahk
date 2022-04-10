@@ -23,10 +23,10 @@
 ;
 ;@Ahk2Exe-SetName               FET Loader
 ;@Ahk2Exe-SetDescription        A simple cheats loader written in AHK.
-;@Ahk2Exe-SetCopyright          Copyright (C) 2021 FET Loader
+;@Ahk2Exe-SetCopyright          Copyright (C) 2022 Nightmare FET Loader
 ;@Ahk2Exe-SetCompanyName        FET Loader
-;@Ahk2Exe-SetProductVersion     3.7.1
-;@Ahk2Exe-SetVersion            3.7.1
+;@Ahk2Exe-SetProductVersion     0.0.7
+;@Ahk2Exe-SetVersion            0.0.7
 ;@Ahk2Exe-SetMainIcon           icon.ico
 ;@Ahk2Exe-UpdateManifest        1
 global script = "FET Loader"
@@ -66,45 +66,46 @@ RegRead, winedition, HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion, ProductN
 RegRead, winver, HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion, ReleaseID
 RegRead, winbuild, HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion, BuildLabEx
 RegRead, isLightMode, HKCU,SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize, SystemUsesLightTheme
-RegRead, isReaded, HKCU\SOFTWARE\FET Loader\FET Loader, isReadedDisclaimer
-RegRead, isDPIWarningReaded, HKCU\SOFTWARE\FET Loader\FET Loader, isDPIWarningReaded
+RegRead, isReaded, HKCU\SOFTWARE\FET Loader\Nightmare FET Loader, isReadedDisclaimer
+RegRead, isDPIWarningReaded, HKCU\SOFTWARE\FET Loader\Nightmare FET Loader, isDPIWarningReaded
 IniRead, oldgui, %A_AppData%\FET Loader\config.ini, settings, oldgui
 IniRead, cheatlist, %A_AppData%\FET Loader\cheats.ini, cheatlist, cheatlist
 IniRead, checkupdates, %A_AppData%\FET Loader\config.ini, settings, checkupdates
 IniRead, forceLoadLibrary, %A_AppData%\FET Loader\config.ini, settings, forceLoadLibrary
-IniRead, login, %A_AppData%\FET Loader\config.ini, credentials, login, %A_Space%
-IniRead, password, %A_AppData%\FET Loader\config.ini, credentials, password, %A_Space%
+IniRead, repo, %A_AppData%\FET Loader\config.ini, settings, repo
+IniRead, repobranch, %A_AppData%\FET Loader\config.ini, settings, repobranch
 
 if (isGithubAvailable() != "1")
 {
     MsgBox, 16, %script%, %string_github_is_not_available%
-    ExitApp   
+    ExitApp    
 }
 
-Logging(1,"Creating folders and downloading files.)
-ifNotExist, %A_AppData%\FET Loader\cheats.ini
+
+Logging(1,"Creating folders and downloading files...")
+IfNotExist, %A_AppData%\FET Loader\cheats.ini
 {	
     Logging(1,"- Getting cheat list...")
-    UrlDownloadToFile, https://raw.githubusercontent.com/%repo%/%repobranch%/cheats.ini, %A_AppData%\FET Loader\cheats.ini
+    UrlDownloadToFile, https://raw.githubusercontent.com/%repo%/%repobranch%/cheats.ini, %A_AppData%\Nightmare FET Loader\cheats.ini
     Logging(1,"......done.")
 }
 
 IfNotExist, %A_AppData%\FET Loader\vac-bypass.exe
 {
     Logging(1,"- Downloading vac-bypass.exe...")
-    UrlDownloadToFile, https://raw.githubusercontent.com/fetloader/dll-repo/main/vac-bypass.exe, %A_AppData%\FET Loader\vac-bypass.exe
+    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/vac-bypass.exe, %A_AppData%\Nightmare FET Loader\vac-bypass.exe
     Logging(1,"......done.")
 }
 IfNotExist, %A_AppData%\FET Loader\emb.exe
 {
     Logging(1,"- Downloading emb.exe...")
-    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/emb.exe, %A_AppData%\FET Loader\emb.exe
+    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/emb.exe, %A_AppData%\Nightmare FET Loader\emb.exe
     Logging(1,"......done.")
 }
 IfNotExist, %A_AppData%\FET Loader\rpconfig.ini
 {	
     Logging(1,"- Getting rpconfig...")
-    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/rpconfig.ini, %A_AppData%\FET Loader\rpconfig.ini
+    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/rpconfig.ini, %A_AppData%\Nightmare FET Loader\rpconfig.ini
     Logging(1,"......done.")
 }
 Logging(1,"done.")
@@ -230,8 +231,8 @@ IniRead, line2, %A_AppData%\FET Loader\rpconfig.ini, state, line2
 
 IniWrite, %largeimage%, %A_AppData%\FET Loader\EasyRP\config.ini, Images, LargeImage
 IniWrite, %largeimagetooltip%, %A_AppData%\FET Loader\EasyRP\config.ini, Images, LargeImageTooltip
-IniWrite, %smallimage%, %A_AppData%\FET Loader\EasyRP\config.ini, Images, SmallImage
-IniWrite, %smallimagetooltip%, %A_AppData%\FET Loader\EasyRP\config.ini, Images, SmallImageTooltip
+IniWrite, %smallimage%, %A_AppData%\Nightmare FET Loader\EasyRP\config.ini, Images, SmallImage
+IniWrite, %smallimagetooltip%, %A_AppData%\Nightmare FET Loader\EasyRP\config.ini, Images, SmallImageTooltip
 IniWrite, %line1%, %A_AppData%\FET Loader\EasyRP\config.ini, State, Details
 IniWrite, %line2%, %A_AppData%\FET Loader\EasyRP\config.ini, State, State
 Run, %A_AppData%\FET Loader\EasyRP\easyrp.exe, %A_AppData%\FET Loader\EasyRP, Hide
@@ -240,6 +241,48 @@ if (checkupdates = "true" and build_status = "release")
 {
     Logging(1,"Checking updates...")
     OTA.checkupd()
+}
+if (oldgui = "true")
+{
+    IniRead, cheatlist, %A_AppData%\FET Loader\cheats.ini, cheatlist, cheatlist
+	Gui, Font, s9
+	Gui, Show, w323 h165, %script% %version%
+	Gui, Add, ListBox, x12 y9 w110 h140 vCheat Choose1, %cheatlist%
+	Gui, Add, Button, x172 y9 w90 h30 +Center gLoad, %string_load%
+	Gui, Add, Button, x172 y69 w90 h30 +Center gBypass, %string_bypass%
+	Gui, Add, Button, x132 y119 w65 h30 +Center gConfigOpen, %string_config%
+	Gui, Add, Button, x242 y119 w65 h30 +Center gShowAbout, %string_about%
+	Logging(1,"done.")
+	return
+}
+else
+{
+    IniRead, repo, %A_AppData%\FET Loader\config.ini, settings, repo
+    IniRead, repobranch, %A_AppData%\FET Loader\config.ini, settings, repobranch
+    newrepo = %repo%/%repobranch%/cheats.ini
+    FileRead, gui, Web\js\iniparser.bak
+    StringReplace, newgui, gui, fetloader/dll-repo/main/cheats.ini, %newrepo%, All
+    FileAppend, %newgui%, Web\js\iniparser.js
+    IniRead, cheatlist, %A_AppData%\FET Loader\cheats.ini, cheatlist, cheatlist
+	StringSplit, cheatss, cheatlist, |
+	cheatsCount := cheatss0 
+    neutron := new NeutronWindow()
+    neutron.Load("Web\main.html")
+    if (isLightMode = 1)
+    {
+        Logging(1, "Changing loader theme")
+        neutron.wnd.toggleTheme()
+    }
+
+    guiheight := cheatsCount * 40 + 40
+    if (guiheight < 320)
+    {
+        guiheight := 330
+    }
+    neutron.Gui("-Resize")
+    neutron.Show("w400 h" guiheight, script)
+    return
+}
 
 GuiClose:
     run taskkill.exe /f /im easyrp.exe,, Hide
@@ -251,44 +294,8 @@ NeutronClose:
     run taskkill.exe /f /im easyrp.exe,, Hide
     ExitApp
     return
- 
-ShowGui:
-{
-    if (oldgui = "true")
-    {
-        Gui, Old:New
-        Gui, Old:Add, ListBox, x12 y9 w110 h140 +HwndHLB vCheat Choose1
-        Count:=LBEX_GetCount(HLB)
-        for i, obj in parsed
-        {
-            LBEX_Add(HLB,obj.title)
-        }
-        Gui, Old:Font, s9
-        Gui, Old:Add, Button, x172 y9 w90 h30 +Center gLoad, %string_load%
-        Gui, Old:Add, Button, x172 y69 w90 h30 +Center gBypass, %string_bypass%
-        Gui, Old:Add, Button, x132 y119 w65 h30 +Center gConfigOpen, %string_config%
-        Gui, Old:Add, Button, x242 y119 w65 h30 +Center gShowAbout, %string_about%
-        Gui, Old:Show, w323 h165, %script% %version%
-        return
-    }
-    else
-    {
-        neutron := new NeutronWindow()
-        neutron.Load("Web\main.html")
-        if (isLightMode = 1)
-        {
-            Logging(1, "Changing loader theme")
-            neutron.wnd.toggleTheme()
-        }
-        guiheight := 330
-        neutron.Gui("-Resize")
-        neutron.Show("w400 h" guiheight, script)
-        return
-    }
-}
-return
 
-
-
-ExitApp
-return
+Load:
+    Gui, Submit, NoHide
+    Inject(0,Cheat)
+    return
