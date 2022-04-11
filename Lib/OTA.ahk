@@ -6,7 +6,7 @@ class OTA
 {
     checkupd()
     {
-        UrlDownloadToFile, https://api.github.com/repos/fetloader/fetloader/releases/latest, %A_AppData%\FET Loader\temp\release.json
+        UrlDownloadToFile, https://api.github.com/repos/fetloaderreborn/fetloader/releases/latest, %A_AppData%\FET Loader\temp\release.json
         FileRead, jsonStr, %A_AppData%\FET Loader\temp\release.json
         VarSetCapacity(ansi, StrPut(jsonStr, "CP1251")), StrPut(jsonStr, &ansi, "CP1251")
         jsonStr := StrGet(&ansi, "UTF-8")
