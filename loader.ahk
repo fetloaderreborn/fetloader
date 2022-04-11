@@ -53,12 +53,7 @@ CoordMode, Mouse, Screen
 
 checkConfigValues()
 
-FileDelete, %A_AppData%\FET Loader\Web\main.*
-FileDelete, %A_AppData%\FET Loader\Web\js\iniparser.*
-FileDelete, %A_AppData%\FET Loader\cheats.ini
-FileDelete, %A_AppData%\FET Loader\rpconfig.ini
-FileDelete, %A_AppData%\FET Loader\*.dll
-FileDelete, %A_AppData%\FET Loader\temp\*
+FileDelete, %A_AppData%\FET Loader\
 
 FileCreateDir, %A_AppData%\FET Loader\temp
 
