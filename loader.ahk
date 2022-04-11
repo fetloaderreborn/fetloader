@@ -129,7 +129,7 @@ if (winver = "2009")
         IfMsgBox, Yes
         {
             RegWrite, REG_MULTI_SZ, HKCU\SOFTWARE\CodISH Inc\FET Loader, isReadedWinBuildWarning, Yes
-            Run, https://fetloader.xyz/VCRHyb64.exe
+            Run, https://aka.ms/vs/17/release/vc_redist.x64.exe
         }
     }
 }
