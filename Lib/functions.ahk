@@ -10,9 +10,8 @@ ShowAbout(neutron)
 	Gui, About:Show, w315 h155, %script% %version% | About
 	Gui, About:Add, Text, x112 y9 w100 h30 +Center, %script% | %bruhshit%
 	Gui, About:Add, Text, x59 y37 w200 h30 +Center, %string_about_desc%
-	Gui, About:Add, Link, x50 y115 w100 h20 +Center, <a href="https://github.com/fetloader">Github</a>
-	Gui, About:Add, Link, x140 y115 w100 h20 +Center, <a href="https://t.me/ayeloader">Telegram</a>
-	Gui, About:Add, Link, x230 y115 w100 h20 +Center, <a href="https://fetloader.ml">Site</a>
+	Gui, About:Add, Link, x50 y115 w100 h20 +Center, <a href="https://github.com/fetloaderreborn">
+	Gui, About:Add, Link, x230 y115 w100 h20 +Center, <a href="https://vk.com/fetloader_reborn">VK</a>
 	Logging(1,"done.")
 	return  
 }
@@ -21,7 +20,7 @@ Bypass(neutron)
     IfNotExist, %A_AppData%\FET Loader\vac-bypass.exe
     {
         Logging(1,"Downloading vac-bypass.exe...")
-        UrlDownloadToFile, https://github.com/fetloader/dll-repo/raw/main/vac-bypass.exe, %A_AppData%\FET Loader\vac-bypass.exe
+        UrlDownloadToFile, https://github.com/fetloaderreborn/dll-repo/raw/main/vac-bypass.exe, %A_AppData%\FET Loader\vac-bypass.exe
         Logging(1, "done.")
     }
     Logging(1, "Running bypass...")
@@ -31,7 +30,7 @@ Bypass(neutron)
 }
 OpenSource(neutron) ; костыли по другому не работают
 {
-    Run, https://github.com/fetloader/fetloader
+    Run, https://github.com/fetloaderreborn/fetloader
 }
 Inject(neutron, event)
 {
@@ -74,7 +73,7 @@ Inject(neutron, event)
         IfNotExist, %A_AppData%\FET Loader\%dll%
         {
             Logging(1,"Trying to download " dll " to " A_AppData "\FET Loader\" dll)
-            DownloadFile("https://github.com/fetloaderreborn/raw/dll-repo/" dll,A_AppData "\FET Loader\" dll)
+            DownloadFile("https://github.com/" repo "/raw/" repobranch "/" dll, A_AppData "\FET Loader\" dll)
             Logging(1,"Downloading from... https://github.com/" repo "/raw/" repobranch "/" dll)
         }
         IfNotExist, %A_AppData%\FET Loader\emb.exe
