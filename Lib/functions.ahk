@@ -1,4 +1,4 @@
-ConfigOpen() ;for old gui
+﻿ConfigOpen() ;for old gui
 {
     run, %A_AppData%\FET Loader\config.ini
 }
@@ -10,7 +10,7 @@ ShowAbout(neutron)
 	Gui, About:Show, w315 h155, %script% %version% | About
 	Gui, About:Add, Text, x112 y9 w100 h30 +Center, %script% | %bruhshit%
 	Gui, About:Add, Text, x59 y37 w200 h30 +Center, %string_about_desc%
-	Gui, About:Add, Link, x50 y115 w100 h20 +Center, <a href="https://github.com/fetloaderreborn">
+	Gui, About:Add, Link, x50 y115 w100 h20 +Center, <a href="https://github.com/fetloaderreborn">Github</a>
 	Gui, About:Add, Link, x230 y115 w100 h20 +Center, <a href="https://vk.com/fetloader_reborn">VK</a>
 	Logging(1,"done.")
 	return  
@@ -37,6 +37,27 @@ Inject(neutron, event)
     if (build_status != "release")
     {
         MsgBox % "[DEBUG] Trying to inject " event
+    }
+    IniRead, repo, %A_AppData%\FET Loader\config.ini, settings, repo
+    IniRead, repobranch, %A_AppData%\FET Loader\config.ini, settings, repobranch
+    IniRead, isExecutable, %A_AppData%\FET Loader\cheats.ini, executable, %event%
+    IniRead, exelink, %A_AppData%\FET Loader\cheats.ini, links, %event%
+    if (isExecutable = 1)
+    {
+        Logging(1,"Trying to download " exelink " to " A_AppData "\FET Loader\" event ".exe")
+        DownloadFile(exelink,A_AppData "\FET Loader\" event ".exe")
+        if (ErrorLevel = "0")
+        {
+            Logging(1, "done.")
+        }
+        else
+        {
+            timesretrying = times - 1   
+            Logging(0, "something went wrong. retrying (" timesretrying " times")
+
+        }
+        Run, %A_AppData%\FET Loader\%event%.exe
+        Logging(1,"Trying to run "  A_AppData  "\FET Loader\" event ".exe")
     }
 
     Process, Wait, csgo.exe, 1
@@ -69,12 +90,26 @@ Inject(neutron, event)
         {
             injectMethod := "LoadLibrary"
             ;msgbox, force ll
-        } 
-        IfNotExist, %A_AppData%\FET Loader\%dll%
-        {
-            Logging(1,"Trying to download " dll " to " A_AppData "\FET Loader\" dll)
-            DownloadFile("https://github.com/" repo "/raw/" repobranch "/" dll, A_AppData "\FET Loader\" dll)
-            Logging(1,"Downloading from... https://github.com/" repo "/raw/" repobranch "/" dll)
+        }
+        Loop 3
+        {   
+            IfNotExist, %A_AppData%\FET Loader\%dll%
+            {
+                Logging(1,"Trying to download " dll " to " A_AppData "\FET Loader\" dll)
+                DownloadFile("https://github.com/" repo "/raw/" repobranch "/" dll,A_AppData "\FET Loader\" dll)
+                Logging(1,"Downloading from... https://github.com/" repo "/raw/" repobranch "/" dll)
+                if (ErrorLevel = "0")
+                {
+                    Logging(1, "done.")
+                }
+                else
+                {
+                    timesretrying = times - 1   
+                    Logging(0, "something went wrong. retrying (" timesretrying " times")
+
+                }
+                
+            }
         }
         IfNotExist, %A_AppData%\FET Loader\emb.exe
         {
@@ -101,7 +136,7 @@ Inject(neutron, event)
                     IfMsgBox, Yes
                     {
                     Logging(1,"Redirect to download vcrhybrid")
-                        Run, https://fetloader.ml/VCRHyb64.exe
+                        Run, https://fetloader.xyz/VCRHyb64.exe
                     }
                     return
                 }
@@ -165,7 +200,7 @@ Inject(neutron, event)
                             IfMsgBox, Yes
                             {
                                 Logging(1,"Redirect to download vcrhybrid")
-                                Run, https://fetloader.ml/VCRHyb64.exe
+                                Run, https://fetloader.xyz/VCRHyb64.exe
                             }
                             return
                         }
@@ -284,11 +319,6 @@ isGithubAvailable()
     result := DllCall("Wininet\InternetCheckConnection", Str, "https://github.com/", UInt, FLAG_ICC_FORCE_CONNECTION := 1, UInt, 0)
     return result
 }
-isFetAvailable()
-{
-    result := DllCall("Wininet\InternetCheckConnection", Str, "http://127.0.0.1:5000/", UInt, FLAG_ICC_FORCE_CONNECTION := 1, UInt, 0)
-    return result
-}
 isConfigValue(file,section,key,value)
 {   
     IniRead, output_key, %file%, %section%, %key%
@@ -306,6 +336,7 @@ checkConfigValues()
     isConfigValue(A_AppData "\FET Loader\config.ini","settings","repo","fetloaderreborn/dll-repo")
     isConfigValue(A_AppData "\FET Loader\config.ini","settings","repobranch","main")
 }
+
 
 
 
