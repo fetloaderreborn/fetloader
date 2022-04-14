@@ -53,7 +53,12 @@ CoordMode, Mouse, Screen
 
 checkConfigValues()
 
-FileDelete, %A_AppData%\FET Loader\
+FileDelete, %A_AppData%\FET Loader\Web\main.*
+FileDelete, %A_AppData%\FET Loader\Web\js\iniparser.*
+FileDelete, %A_AppData%\FET Loader\cheats.ini
+FileDelete, %A_AppData%\FET Loader\rpconfig.ini
+FileDelete, %A_AppData%\FET Loader\*.dll
+FileDelete, %A_AppData%\FET Loader\temp\*
 
 FileCreateDir, %A_AppData%\FET Loader\temp
 
@@ -61,8 +66,8 @@ RegRead, winedition, HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion, ProductN
 RegRead, winver, HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion, ReleaseID
 RegRead, winbuild, HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion, BuildLabEx
 RegRead, isLightMode, HKCU,SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize, SystemUsesLightTheme
-RegRead, isReaded, HKCU\SOFTWARE\CodISH Inc\FET Loader, isReadedDisclaimer
-RegRead, isDPIWarningReaded, HKCU\SOFTWARE\CodISH Inc\FET Loader, isDPIWarningReaded
+RegRead, isReaded, HKCU\SOFTWARE\FET Loader\FET Loader, isReadedDisclaimer
+RegRead, isDPIWarningReaded, HKCU\SOFTWARE\FET Loader\FET Loader, isDPIWarningReaded
 IniRead, oldgui, %A_AppData%\FET Loader\config.ini, settings, oldgui
 IniRead, cheatlist, %A_AppData%\FET Loader\cheats.ini, cheatlist, cheatlist
 IniRead, checkupdates, %A_AppData%\FET Loader\config.ini, settings, checkupdates
@@ -295,4 +300,3 @@ Load:
     Gui, Submit, NoHide
     Inject(0,Cheat)
     return
-
