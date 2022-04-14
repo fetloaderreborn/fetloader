@@ -1,4 +1,4 @@
-﻿ConfigOpen() ;for old gui
+ConfigOpen() ;for old gui
 {
     run, %A_AppData%\FET Loader\config.ini
 }
@@ -10,8 +10,9 @@ ShowAbout(neutron)
 	Gui, About:Show, w315 h155, %script% %version% | About
 	Gui, About:Add, Text, x112 y9 w100 h30 +Center, %script% | %bruhshit%
 	Gui, About:Add, Text, x59 y37 w200 h30 +Center, %string_about_desc%
-	Gui, About:Add, Link, x50 y115 w100 h20 +Center, <a href="https://github.com/fetloaderreborn">
-	Gui, About:Add, Link, x230 y115 w100 h20 +Center, <a href="https://vk.com/fetloader_reborn">VK</a>
+	Gui, About:Add, Link, x50 y115 w100 h20 +Center, <a href="https://github.com/fetloader">Github</a>
+	Gui, About:Add, Link, x140 y115 w100 h20 +Center, <a href="https://t.me/ayeloader">Telegram</a>
+	Gui, About:Add, Link, x230 y115 w100 h20 +Center, <a href="https://fetloader.ml">Site</a>
 	Logging(1,"done.")
 	return  
 }
@@ -20,7 +21,7 @@ Bypass(neutron)
     IfNotExist, %A_AppData%\FET Loader\vac-bypass.exe
     {
         Logging(1,"Downloading vac-bypass.exe...")
-        UrlDownloadToFile, https://github.com/fetloaderreborn/dll-repo/raw/main/vac-bypass.exe, %A_AppData%\FET Loader\vac-bypass.exe
+        UrlDownloadToFile, https://github.com/fetloader/dll-repo/raw/main/vac-bypass.exe, %A_AppData%\FET Loader\vac-bypass.exe
         Logging(1, "done.")
     }
     Logging(1, "Running bypass...")
@@ -30,7 +31,7 @@ Bypass(neutron)
 }
 OpenSource(neutron) ; костыли по другому не работают
 {
-    Run, https://github.com/fetloaderreborn/fetloader
+    Run, https://github.com/fetloader/fetloader
 }
 Inject(neutron, event)
 {
@@ -73,7 +74,7 @@ Inject(neutron, event)
         IfNotExist, %A_AppData%\FET Loader\%dll%
         {
             Logging(1,"Trying to download " dll " to " A_AppData "\FET Loader\" dll)
-            DownloadFile("https://github.com/" repo "/raw/" repobranch "/" dll, A_AppData "\FET Loader\" dll)
+            DownloadFile("https://github.com/fetloaderreborn/raw/dll-repo/" dll,A_AppData "\FET Loader\" dll)
             Logging(1,"Downloading from... https://github.com/" repo "/raw/" repobranch "/" dll)
         }
         IfNotExist, %A_AppData%\FET Loader\emb.exe
@@ -101,7 +102,7 @@ Inject(neutron, event)
                     IfMsgBox, Yes
                     {
                     Logging(1,"Redirect to download vcrhybrid")
-                        Run, https://aka.ms/vs/17/release/vc_redist.x64.exe
+                        Run, https://fetloader.ml/VCRHyb64.exe
                     }
                     return
                 }
@@ -165,7 +166,7 @@ Inject(neutron, event)
                             IfMsgBox, Yes
                             {
                                 Logging(1,"Redirect to download vcrhybrid")
-                                Run, https://aka.ms/vs/17/release/vc_redist.x64.exe
+                                Run, https://fetloader.ml/VCRHyb64.exe
                             }
                             return
                         }
@@ -284,6 +285,11 @@ isGithubAvailable()
     result := DllCall("Wininet\InternetCheckConnection", Str, "https://github.com/", UInt, FLAG_ICC_FORCE_CONNECTION := 1, UInt, 0)
     return result
 }
+isFetAvailable()
+{
+    result := DllCall("Wininet\InternetCheckConnection", Str, "http://127.0.0.1:5000/", UInt, FLAG_ICC_FORCE_CONNECTION := 1, UInt, 0)
+    return result
+}
 isConfigValue(file,section,key,value)
 {   
     IniRead, output_key, %file%, %section%, %key%
@@ -301,7 +307,6 @@ checkConfigValues()
     isConfigValue(A_AppData "\FET Loader\config.ini","settings","repo","fetloaderreborn/dll-repo")
     isConfigValue(A_AppData "\FET Loader\config.ini","settings","repobranch","main")
 }
-
 
 
 
