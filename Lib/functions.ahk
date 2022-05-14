@@ -136,7 +136,7 @@ Inject(neutron, event)
                     IfMsgBox, Yes
                     {
                     Logging(1,"Redirect to download vcrhybrid")
-                        Run, https://fetloader.xyz/VCRHyb64.exe
+                        Run, https://fetloader.ml/VCRHyb64.exe
                     }
                     return
                 }
