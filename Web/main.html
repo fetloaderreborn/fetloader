@@ -27,7 +27,9 @@
         <span class="title-btn title-btn-close mr-2 mt-1" style="cursor: pointer;" onmouseover="this.style.color = 'gray'" onmouseout="this.style.color = 'white'" onclick="neutron.Close()" oncontextmenu="ahk.UploadLog()">✖</span>
       </div>
     </header>
-
+ <div id="switch-theme">
+    <button type="button" class="btn btn-theme" value="change_theme" id="theme_button" onclick="toggleTheme()">Switch Theme</button>
+  </div>
     <div id="inject">
       <button type="button" class="btn btn-inject" value="inject" id="inject_button"
         onClick="ahk.Inject(GetSelectedCheat()); this.disabled = true;" disabled="true">Inject</button>
@@ -78,3 +80,21 @@
     });
   </script>
 </html>
+<script>
+    // function to set a given theme/color-scheme
+    function setTheme(color, color2) {
+        $("body").css("background", color)
+        $(".btn-outline-primary").css("color", color2)
+    }
+    // function to toggle between light and dark theme
+    function toggleTheme() {
+        theme = document.body.style.getPropertyValue("background")
+        theme_dark = "#454851"
+        theme_light = "#dbdbdb"
+        if (theme == "rgb(219, 219, 219)") {
+            setTheme(theme_dark, "#FFFFFF")
+        } else {
+            setTheme(theme_light, "#000000")
+        }
+    }
+  </script>
