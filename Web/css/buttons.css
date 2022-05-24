@@ -110,3 +110,30 @@
         transform: translateY(0px);
     }
 }
+.btn-theme
+{
+    position: absolute;
+    bottom: 195px;
+    right: 15px;
+    width: 100px;
+    height: 60px;
+    color: #8b6ac9;
+    /* background-color: #17a2b8; */
+    border-color: #8251df;
+}
+.btn-theme:hover
+{
+    color: #fff;
+    background-color: #be94e0;
+    border-color: #be94e0;
+}
+
+.btn-theme:focus, .btn-bypass.focus
+{
+    color: #fff;
+    background-color: #552aa5;
+    border-color: #6f42c1;
+    box-shadow: 0 0 0 0.2rem #be94e0;
+}
+
+
