@@ -1,6 +1,6 @@
 version: 2
 updates:
-  - package-ecosystem: "gitsubmodule"
+  - package-ecosystem: "ahk2exe"
     directory: "/"
     schedule:
       interval: "daily"
