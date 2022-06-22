@@ -1,8 +1,7 @@
 
 ![Logo](https://i.imgur.com/eOSghI6.png)
 
-[![Downloads](https://img.shields.io/github/downloads/fetloader/fetloader/total?style=flat-square)](https://github.com/fetloaderreborn/fetloader/releases)
-[![Discord](https://img.shields.io/discord/837540892411691008?label=discord&style=flat-square)](https://discord.gg/bSgZxY3rQm)
+[![Downloads](https://img.shields.io/github/downloads/fetloaderreborn/fetloader/total?style=flat-square)](https://github.com/fetloaderreborn/fetloader/releases)
 [![Latest version](https://img.shields.io/github/v/release/fetloaderreborn/fetloader?label=latest%20version&style=flat-square)](https://github.com/fetloaderreborn/fetloader/releases/latest)
 [![License](https://img.shields.io/github/license/fetloader/fetloader?style=flat-square)](https://github.com/fetloaderreborn/fetloader/blob/main/LICENSE)
 ### A simple CS:GO cheats loader written in AHK.
