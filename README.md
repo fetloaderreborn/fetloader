@@ -19,7 +19,7 @@
 
 ## How to compile
 - Install AHK Unicode 64-bit
-- Clone the repository with the command `git clone https://github.com/fetloader/fetloader | cd fetloader | git submodule update --init --recursive`
+- Clone the repository with the command `git clone https://github.com/fetloaderreborn/fetloader | cd fetloader | git submodule update --init --recursive`
 - Run `COMPILE.bat`
 
 ## Contributing
